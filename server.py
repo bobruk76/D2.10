@@ -1,4 +1,5 @@
 import sentry_sdk
+from http import HTTPStatus
 
 from bottle import *
 from sentry_sdk.integrations.bottle import BottleIntegration
@@ -18,6 +19,16 @@ def send_css(filename):
 @app.get("/")
 @view('index')
 def index():
+    return {}
+
+@app.get("/fail")
+
+def fail():
+    try:
+        raise RuntimeError("Произошла сгенерированная ошибка!")
+    except:
+        return HTTPResponse(
+                status=HTTPStatus.OK)
     return {}
 
 
